@@ -23,18 +23,19 @@ class KnightTravails
             queue.concat(knight.children)
             knight = Node.new(knight, queue.shift)
         end
-        #p knight
-        find_home(knight,start_pos,end_pos)    
+        p knight
+        #find_home(knight,start_pos,end_pos)    
     end
 
     def valid_children(position,visited)
         result = []
-        p position
-        result = MOVES.map{|move| [position[0] + move[0], position[1] + move[1]]}
-                .keep_if{|move| valid?(move)}
-                .reject{|move| visited.include? (move)}
-                
-        #p result
+        
+        result = MOVES.map{|move| [position[0] + move[0], position[1] + move[1]]} #generating possible moves
+        
+        result.keep_if{|move| valid?(move)} #keeping moves that are on the board
+                       
+        result = result - visited  #removing visited nodes     
+        
         return result
     end
     
@@ -63,4 +64,4 @@ class KnightTravails
 
 end
 knight = KnightTravails.new
-p knight.valid_children([1,1],[3,2])
+p knight.knight_moves([3,3],[4,3])
