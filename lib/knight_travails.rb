@@ -59,4 +59,4 @@ class KnightTravails
 
 end
 knight = KnightTravails.new
-knight.knight_moves([3,3],[4,3])
+knight.knight_moves([1,2],[0,0])
