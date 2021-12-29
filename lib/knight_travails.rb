@@ -24,16 +24,16 @@ class KnightTravails
             queue.concat(knight.children)
             knight = Node.new(knight, queue.shift)
         end
-        p knight
+        
         find_home(knight,start_pos,end_pos)    
     end
 
     def valid_children(position,visited)
         result = []
         
-        result = MOVES.map {|move| [position[0] + move[0], position[1] + move[1]]}
-                .keep_if {|move| valid?(move)}
-                .reject {|move| visited.include?(move)}
+        result = MOVES.map{|move| [position[0] + move[0], position[1] + move[1]]}
+                .keep_if{|move| valid?(move)}
+                .reject{|move| visited.include?(move)}
 
         return result
     end
@@ -51,8 +51,8 @@ class KnightTravails
         end
         puts "The knight takes #{path.length} moves to get from #{start_pos} to #{end_pos}"
         puts 'Here is the path taken'
-        until path.nil?
-            puts path.shift
+        until path.empty?
+            p path.shift
         end
     end
 
