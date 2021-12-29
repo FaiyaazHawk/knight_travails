@@ -1,0 +1,53 @@
+function has to get as input a start coord and end coord and provide the least number of steps
+and the pathway it took
+
+set up constant called moves that has all 8 possible moves from a position
+can use .map on that with coord to get new moves
+
+set up function called valid? to see if move remains on regular board 
+(so range between 0 to 8 in both x and y direction)
+if not, remove it from the children list
+
+gonna be a BFS
+
+we know there is a mathematically guaranteed solution so no need to account for if move possible or not
+
+
+from start coord
+
+generate all 8 moves possible from start coord as children
+
+each move is a child to the parent node 
+
+node class should have 
+parent - which node it was generated from (start pos is set to nil)
+children - its possible children minus visited children (array of which we will maintain in the main function)
+###
+
+main function will have
+create queue
+and visited list
+
+create start pos Node.new(nil, start pos)
+
+add children to end of queue
+
+remove from front of queue
+
+
+until node == end coord
+
+if yes
+    use helper function find_home to travel from current(found) coord node to start coord node
+    going through parents and counting steps, adding nodes from end to start in array 
+    called path(add to start of array) and then
+    return number of steps and path array
+if no
+    add  current node to visited
+    grab new Node from start of queue
+    update new Node to current node
+    make new children from it; check if any children in visited list (exclude them)
+     and add its evaluated children to end of queue
+    
+
+
