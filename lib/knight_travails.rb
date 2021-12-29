@@ -4,14 +4,13 @@ class Node
     def initialize(parent,position)
         @parent = parent
         @position = position
-        @children = nil
+        @children = []
     end
 end
 
 class KnightTravails
 
-    MOVES = [[1,2],[2,1],[1,-2],[2,-1],
-            [-1,2],[-2,1],[-1,-2],[-2,-1]].freeze
+    MOVES = [[1,2],[2,1],[1,-2],[2,-1],[-1,2],[-2,1],[-1,-2],[-2,-1]].freeze
 
     def knight_moves(start_pos,end_pos)
         visited = []
@@ -24,22 +23,27 @@ class KnightTravails
             queue.concat(knight.children)
             knight = Node.new(knight, queue.shift)
         end
-        
+        #p knight
         find_home(knight,start_pos,end_pos)    
     end
 
     def valid_children(position,visited)
         result = []
-        
+        p position
         result = MOVES.map{|move| [position[0] + move[0], position[1] + move[1]]}
                 .keep_if{|move| valid?(move)}
-                .reject{|move| visited.include?(move)}
-
+                .reject{|move| visited.include? (move)}
+                
+        #p result
         return result
     end
     
     def valid?(position)
-        return true if position[0].between?(1,8) && position[1].between?(1,8)
+        if position[0].between?(1,8) && position[1].between?(1,8)
+            return true
+        else
+            return false
+        end
     end
 
     def find_home(knight, start_pos, end_pos)
@@ -52,11 +56,11 @@ class KnightTravails
         puts "The knight takes #{path.length} moves to get from #{start_pos} to #{end_pos}"
         puts 'Here is the path taken'
         until path.empty?
-            p path.shift
+            p path.unshift
         end
     end
 
 
 end
 knight = KnightTravails.new
-knight.knight_moves([1,2],[0,0])
+p knight.valid_children([1,1],[3,2])
