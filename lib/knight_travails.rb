@@ -10,7 +10,7 @@ end
 
 class KnightTravails
 
-    MOVES = [[1,2],[2,1],[1,-2],[2,-1],[-1,2],[-2,1],[-1,-2],[-2,-1]].freeze
+    MOVES = [[1,2],[2,1],[2,-1],[1,-2],[-1,-2],[-2,-1],[-2,1],[-1,2]].freeze
 
     def knight_moves(start_pos,end_pos)
         visited = []
@@ -19,27 +19,29 @@ class KnightTravails
 
         until knight.position == end_pos
             visited += knight.position
-            knight.children = valid_children(knight.position,visited)
-            queue += knight.children
-            knight = Node.new(knight, queue.shift())
+            
+            knight.children = valid_children(knight.position,visited) #valid by checking if child is valid on board and if previously visited
+            
+            queue +=(knight.children) #adding children to queue
+            
+            knight = Node.new(knight, queue.shift) #changing current knight to front of queue
             
         
         end
-        
-        find_home(knight,start_pos,end_pos)    
+        p knight.parent
+        #find_home(knight)    
     end
 
     def valid_children(position,visited)
         result = []
         
         result = MOVES.map{|move| [position[0] + move[0], position[1] + move[1]]} #generating possible moves
-        
-        result = result.keep_if{|move| valid?(move)} #keeping moves that are on the board
+                .keep_if{|move| valid?(move)} #keeping moves that are on the board
                        
-        result = result - visited  #removing visited positions 
+        return result = result - visited  #removing visited positions 
             
         
-        return result
+        
     end
     
     def valid?(position)
@@ -50,14 +52,14 @@ class KnightTravails
         end
     end
 
-    def find_home(knight,start_pos,end_pos)
+    def find_home(knight)
         path = []
         
-        until knight.position == start_pos
+        until knight.parent.nil?
             path += knight.position
             knight = knight.parent
         end
-        puts "The knight takes #{path.length} moves to get from #{start_pos} to #{end_pos}"
+        puts "The knight takes #{path.length} moves to get from start position to end position"
         puts 'Here is the path taken'
         p path
     end
@@ -65,4 +67,4 @@ class KnightTravails
 
 end
 knight = KnightTravails.new
-p knight.knight_moves([3,3],[4,3])
+p knight.knight_moves([1,1],[2,3])
