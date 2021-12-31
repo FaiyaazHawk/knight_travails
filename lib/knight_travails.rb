@@ -28,8 +28,8 @@ class KnightTravails
             
         
         end
-        p knight.parent
-        #find_home(knight)    
+        
+        find_path(knight,start_pos)    
     end
 
     def valid_children(position,visited)
@@ -52,19 +52,21 @@ class KnightTravails
         end
     end
 
-    def find_home(knight)
+    def find_path(knight,start_pos)
         path = []
         
         until knight.parent.nil?
             path += knight.position
             knight = knight.parent
         end
-        puts "The knight takes #{path.length} moves to get from start position to end position"
+        puts "The knight takes #{path.length-1} moves to get from start position to end position"
         puts 'Here is the path taken'
-        p path
+        p start_pos
+        path
+        
     end
 
 
 end
 knight = KnightTravails.new
-p knight.knight_moves([1,1],[2,3])
+p knight.knight_moves([3,3],[4,3])
