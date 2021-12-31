@@ -18,12 +18,10 @@ class KnightTravails
         knight = Node.new(nil,start_pos)
 
         until knight.position == end_pos
-            visited += knight.position
-            
-            knight.children = valid_children(knight.position,visited) #valid by checking if child is valid on board and if previously visited
-            
-            queue +=(knight.children) #adding children to queue
-            
+            visited << knight.position
+            knight.children = valid_children(knight.position) #valid by checking if child is valid on board
+            queue += (knight.children) #adding children to queue
+            queue -= visited #removing visited positions from queue
             knight = Node.new(knight, queue.shift) #changing current knight to front of queue
             
         
@@ -32,13 +30,13 @@ class KnightTravails
         find_path(knight,start_pos)    
     end
 
-    def valid_children(position,visited)
+    def valid_children(position)
         result = []
         
         result = MOVES.map{|move| [position[0] + move[0], position[1] + move[1]]} #generating possible moves
                 .keep_if{|move| valid?(move)} #keeping moves that are on the board
-                       
-        return result = result - visited  #removing visited positions 
+        
+        return result
             
         
         
@@ -56,10 +54,10 @@ class KnightTravails
         path = []
         
         until knight.parent.nil?
-            path += knight.position
+            path << knight.position
             knight = knight.parent
         end
-        puts "The knight takes #{path.length-1} moves to get from start position to end position"
+        puts "The knight takes #{path.length} moves to get from start position to end position"
         puts 'Here is the path taken'
         p start_pos
         path
