@@ -27,6 +27,7 @@ class KnightTravails
         
         end
         
+        
         find_path(knight,start_pos)    
     end
 
